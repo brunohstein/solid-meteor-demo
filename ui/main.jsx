@@ -2,6 +2,7 @@ import {For, Show, createSignal, onCleanup} from 'solid-js';
 import {Meteor} from 'meteor/meteor';
 import {Session} from 'meteor/session';
 import {createFind, createSubscribe, createTracker} from 'solid-meteor-data';
+import {Router, Routes, Route, Link} from '@solidjs/router'
 
 import {ToDo} from '/lib/todo.js';
 
@@ -101,6 +102,20 @@ export function ComplexTracker() {
   </div>;
 };
 
+export function Home({ name, setName }) {
+  return <>
+    <NameInput name={name()} setName={setName}/>
+    <Hello name={name()}/>
+    <TodoList name={name()}/>
+    <Timer/>
+    <ComplexTracker/>
+  </>
+}
+
+export function About() {
+  return <h2>The about page</h2>
+}
+
 export function App() {
   // Use Session variable to remember name across server-triggered reloads.
   const name = createTracker(() => Session?.get('name') || 'Solid');
@@ -109,14 +124,19 @@ export function App() {
   //const [name, setName] = createSignal(Session?.get('name') || 'Solid');
   //createEffect(() => Session?.set('name', name()));
 
-  return <>
+  return <Router>
     <h1>Minimal Meteor + SolidJS demo</h1>
-    <NameInput name={name()} setName={setName}/>
-    <Hello name={name()}/>
-    <TodoList name={name()}/>
-    <Timer/>
-    <ComplexTracker/>
-  </>;
+
+    <nav>
+      <Link href="/">Home</Link>
+      <Link href="/about">About</Link>
+    </nav>
+
+    <Routes>
+      <Route path="/" element={<Home name={name} setName={setName} />} />
+      <Route path="/about" element={<About />} />
+    </Routes>
+  </Router>;
 }
 
 if (module.hot) module.hot.decline();

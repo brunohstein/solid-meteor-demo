@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@babel/runtime": "7.16.7",
+    "@solidjs/router": "^0.4.2",
     "meteor-node-stubs": "1.1.0",
-    "solid-js": "1.3.3",
+    "solid-js": "1.3.5",
     "solid-meteor-data": "0.5.2"
   },
   "devDependencies": {
@@ -23,8 +24,8 @@
   },
   "meteor": {
     "mainModule": {
-      "client": "client/main.tsx",
-      "server": "server/main.tsx"
+      "client": "client/main.jsx",
+      "server": "server/main.jsx"
     },
     "testModule": "tests/main.js"
   },
